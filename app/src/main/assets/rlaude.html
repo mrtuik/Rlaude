@@ -82,17 +82,29 @@
     h2 { font-size:23px; letter-spacing:-.04em; margin:0 }
     h3 { font-size:15px; margin:0 }
     .subtitle { color:var(--muted); font-size:14px; line-height:1.6; margin:0 0 30px }
-    .composer { border:1px solid var(--line); background:var(--panel); border-radius:16px; padding:12px; box-shadow:var(--shadow); }
-    .composer:focus-within { border-color:var(--accent-2); box-shadow:0 0 0 3px rgba(0,0,0,.09),var(--shadow) }
-    .composer textarea { display:block; width:100%; min-height:64px; max-height:160px; resize:none; border:0; outline:0; background:transparent; padding:2px 3px 11px; font-size:14px; line-height:1.5 }
+    .composer { position:relative; border:1px solid var(--line); background:var(--panel); border-radius:18px; padding:11px 12px 10px; box-shadow:var(--shadow); transition:border-color .16s,box-shadow .16s; }
+    .composer:focus-within { border-color:var(--text); box-shadow:0 0 0 2px color-mix(in srgb,var(--text) 10%,transparent),var(--shadow) }
+    .composer-head { min-height:28px; display:flex; align-items:flex-start; justify-content:space-between; gap:10px; margin-bottom:4px }
+    .model-tag { display:inline-flex; align-items:center; gap:6px; max-width:210px; padding:5px 8px; border:1px solid var(--line); border-radius:8px; background:var(--panel-2); color:var(--text); font:11px var(--font); white-space:nowrap }
+    .model-tag span:first-child { color:var(--faint) }
+    .attachment-deck { display:flex; flex-direction:row-reverse; padding-right:2px }
+    .attachment-tile { position:relative; width:32px; height:32px; display:grid; place-items:center; border:1px solid var(--line); border-radius:8px; background:var(--panel); color:var(--muted); box-shadow:0 1px 3px rgba(0,0,0,.08); font:9px var(--font); font-weight:700 }
+    .attachment-tile button { position:absolute; top:-5px; right:-5px; width:15px; height:15px; display:grid; place-items:center; border-radius:50%; background:var(--text); color:var(--bg); font-size:10px; line-height:1 }
+    .composer textarea { display:block; width:100%; min-height:52px; max-height:160px; resize:none; border:0; outline:0; background:transparent; padding:4px 3px 10px; font-size:14px; line-height:1.5 }
     .composer textarea::placeholder { color:var(--faint) }
-    .composer-row { display:flex; align-items:center; justify-content:space-between; gap:8px }
-    .composer-tools { display:flex; gap:3px }
-    .mini { display:grid; place-items:center; width:29px; height:29px; border-radius:7px; background:transparent; color:var(--muted) }
+    .composer-row { display:flex; align-items:center; justify-content:space-between; gap:8px; padding-top:8px; border-top:1px solid color-mix(in srgb,var(--line) 62%,transparent) }
+    .composer-tools { display:flex; align-items:center; gap:3px }
+    .mini { display:grid; place-items:center; width:31px; height:31px; border-radius:8px; background:transparent; color:var(--muted) }
     .mini:hover { background:var(--panel-2); color:var(--text) }
-    .mini svg { width:15px; height:15px; stroke:currentColor; fill:none; stroke-width:1.7 }
-    .send { width:34px; height:32px; border-radius:9px; background:var(--accent); color:#fff; display:grid; place-items:center }
-    .send svg { width:16px; height:16px; stroke:currentColor; fill:none; stroke-width:2 }
+    .mini svg { width:17px; height:17px; stroke:currentColor; fill:none; stroke-width:1.8 }
+    .tool-label { width:auto; grid-auto-flow:column; gap:7px; padding:0 7px; color:var(--text); font-size:12px; font-weight:600 }
+    .send { width:38px; height:38px; border-radius:50%; background:var(--accent); color:#fff; display:grid; place-items:center; flex:none; transition:transform .15s,opacity .15s }
+    .send:disabled { opacity:.35; cursor:default }
+    .send svg { width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:2.2 }
+    .send .stop-shape { fill:currentColor; stroke:none }
+    .generation-note { display:none; position:absolute; right:58px; bottom:13px; color:var(--muted); font-size:10px }
+    .composer.generating .generation-note { display:block }
+    .composer.generating .send { background:var(--text); color:var(--bg) }
     .quick { display:flex; flex-wrap:wrap; gap:8px; margin-top:18px }
     .chip { border:1px solid var(--line); background:transparent; color:var(--muted); border-radius:99px; padding:8px 11px; font-size:11px }
     .chip:hover { color:var(--text); border-color:var(--accent-2); background:var(--panel-2) }
@@ -223,7 +235,7 @@
       <div class="quick"><button class="chip" onclick="quick('Create a new app')">Create App</button><button class="chip" onclick="quick('Help me fix this code')">Fix Code</button><button class="chip" onclick="quick('Explain this code')">Explain Code</button><button class="chip" onclick="quick('Build this project')">Build Project</button><button class="chip" onclick="quick('Clone a GitHub repository')">Clone GitHub</button></div>
       <div class="recent"><div class="section-head"><div><h3>Recent projects</h3><p>Your local Rlaude workspaces</p></div><button class="ghost" onclick="go('projects')">View all</button></div><div id="home-projects" class="project-grid"></div></div>
     </div></section>
-    <section class="screen" id="screen-chat"><div class="wrap chat-wrap"><div id="chat-list" class="chat-list"></div></div><div class="chat-composer"><div class="composer"><div class="attachment-chip" data-attachment-chip><strong></strong><button onclick="clearAttachment()" title="Remove attachment">✕</button></div><textarea id="chat-input" placeholder="Message Rlaude…" onkeydown="composerKey(event,'chat-input')"></textarea><div class="composer-row"><div class="composer-tools"><button class="mini" onclick="attachFile()" title="Attach a file"><svg viewBox="0 0 24 24"><path d="m20 11-8.5 8.5a5 5 0 0 1-7-7L13 4a3.5 3.5 0 0 1 5 5l-8.5 8.5a2 2 0 0 1-3-3L15 6"/></svg></button><button class="mini" onclick="stopGeneration()" title="Stop"><svg viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1"/></svg></button></div><button class="send" onclick="sendFrom('chat-input')"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div></div></section>
+    <section class="screen" id="screen-chat"><div class="wrap chat-wrap"><div id="chat-list" class="chat-list"></div></div><div class="chat-composer"><div class="composer" id="chat-composer"><div class="composer-head"><button class="model-tag" onclick="go('settings')" title="Choose model"><span>@model</span><strong id="composer-model">Active</strong></button><div class="attachment-deck" data-attachment-deck></div></div><textarea id="chat-input" rows="1" placeholder="Ask Rlaude anything…" oninput="resizeComposer(this)" onkeydown="composerKey(event,'chat-input')"></textarea><div class="composer-row"><div class="composer-tools"><button class="mini" onclick="attachFile()" title="Add attachment" aria-label="Add attachment"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></button><button class="mini tool-label" onclick="go('settings')" title="Tools and settings"><svg viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/><circle cx="9" cy="8" r="2"/><circle cx="15" cy="16" r="2"/></svg><span>Tools</span></button><button class="mini" onclick="toast('Voice input will be enabled in a future release.')" title="Voice input" aria-label="Voice input"><svg viewBox="0 0 24 24"><path d="M4 10v4M8 6v12M12 3v18M16 7v10M20 10v4" stroke-linecap="round"/></svg></button></div><span class="generation-note">Generating…</span><button class="send" id="generation-action" onclick="handleGenerationAction()" title="Send message" aria-label="Send message"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div></div></section>
     <section class="screen" id="screen-projects"><div class="wrap"><div class="section-head"><div><h2>Projects</h2><p>Local workspaces stored inside Rlaude</p></div><button class="primary" onclick="openModal()">+ New project</button></div><div class="toolbar"><input class="search" id="project-search" placeholder="Search projects…" oninput="renderProjects()"></div><div id="project-list" class="project-grid"></div></div></section>
     <section class="screen" id="screen-files"><div class="wrap"><div class="section-head"><div><h2>Files</h2><p id="files-subtitle">Select a project to browse its files</p></div><button class="ghost" onclick="go('projects')">Change project</button></div><div class="toolbar"><input class="search" id="file-search" placeholder="Filter files…" oninput="renderFiles()"><button class="primary" onclick="createFile(false)">+ File</button></div><div id="file-list" class="list"></div></div></section>
     <section class="screen" id="screen-editor"><div class="wrap"><div class="section-head"><div><h2>Editor</h2><p id="editor-subtitle">Open a file from the explorer</p></div><button class="primary" onclick="saveEditor()">Save</button></div><div class="editor-shell"><div class="editor-head"><span id="editor-path">No file selected</span><div class="editor-actions"><button class="ghost" onclick="toast('Select code in the editor, then ask Rlaude from chat.')">Ask Rlaude</button></div></div><div class="code-area"><div class="lines" id="line-numbers">1</div><textarea id="editor" spellcheck="false" oninput="updateLines()" onscroll="syncLines()"></textarea></div></div><div id="diff-note" style="margin-top:12px"></div></div></section>
@@ -326,7 +338,15 @@
   function toggleMenu(){ const open=$('sidebar').classList.toggle('open'); $('sidebar-backdrop').classList.toggle('open',open) }
   function toast(message){ const el=$('toast'); el.textContent=message; el.classList.add('show'); clearTimeout(window._toast); window._toast=setTimeout(()=>el.classList.remove('show'),2400) }
   function quick(text){ $('home-input').value=text; $('home-input').focus() }
-  function composerKey(e,id){ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendFrom(id)} }
+  function composerKey(e,id){ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();if(state.pending)stopGeneration();else sendFrom(id)} }
+  function resizeComposer(input){ input.style.height='auto'; input.style.height=Math.min(input.scrollHeight,160)+'px'; }
+  function handleGenerationAction(){ if(state.pending) stopGeneration(); else sendFrom('chat-input'); }
+  function updateGenerationAction(){
+    const composer=$('chat-composer'),button=$('generation-action'); if(!composer||!button)return;
+    composer.classList.toggle('generating',state.pending);
+    button.title=state.pending?'Stop generating':'Send message'; button.setAttribute('aria-label',button.title);
+    button.innerHTML=state.pending?'<svg viewBox="0 0 24 24"><rect class="stop-shape" x="7" y="7" width="10" height="10" rx="1.5"/></svg>':'<svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  }
   function newChat(){ state.sessionId=null; $('chat-list').innerHTML=''; state.attachment=null; renderAttachment(); go('chat'); renderChatHistory(); }
   function sendFrom(id) {
     const input=$(id), raw=input.value.trim(); if(!raw && !state.attachment) return;
@@ -337,7 +357,7 @@
     }
     let text=raw;
     if(state.attachment){ text=(raw?raw+'\n\n':'')+'Attached file: '+state.attachment.name+'\n```\n'+state.attachment.content+'\n```'; }
-    input.value=''; if(state.screen!=='chat') go('chat'); appendMessage('user',text);
+    input.value=''; input.style.height='auto'; if(state.screen!=='chat') go('chat'); appendMessage('user',text);
     state.attachment=null; renderAttachment();
     state.pending=true; renderPending();
     const result=bridge('sendMessage',{projectId:state.project.id,text,sessionId:state.sessionId,requestId:String(Date.now())});
@@ -350,6 +370,11 @@
     document.querySelectorAll('[data-attachment-chip]').forEach(el=>{
       if(state.attachment){ el.classList.add('show'); el.querySelector('strong').textContent=state.attachment.name; }
       else { el.classList.remove('show'); }
+    });
+    document.querySelectorAll('[data-attachment-deck]').forEach(el=>{
+      if(!state.attachment){ el.innerHTML=''; return; }
+      const ext=(state.attachment.name.split('.').pop()||'FILE').slice(0,4).toUpperCase();
+      el.innerHTML='<div class="attachment-tile" title="'+escape(state.attachment.name)+'"><span>'+escape(ext)+'</span><button onclick="clearAttachment()" title="Remove attachment" aria-label="Remove attachment">×</button></div>';
     });
   }
   function loadChatSessions(){ const r=bridge('getChatSessions'); state.chats=r.ok?(r.data||[]):[]; renderChatHistory(); }
@@ -383,7 +408,7 @@
     safe=safe.replace(/```(?:\w+)?\n?([\s\S]*?)```/g,'<pre>$1</pre>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>');
     return '<p>'+safe+'</p>';
   }
-  function renderPending(){ let old=$('typing'); if(old) old.remove(); if(state.pending){const row=document.createElement('div');row.id='typing';row.className='message ai';row.innerHTML='<div class="avatar">✦</div><div class="message-body"><div class="message-meta">Rlaude</div><div class="typing"><i></i><i></i><i></i>&nbsp; working</div><div class="tool-card"><div class="tool-head">Working <span class="chev">⌄</span></div><div class="tool-items"><div class="tool-item">Reading project context</div><div class="tool-item">Waiting for OpenCode</div></div></div></div>';$('chat-list').append(row);row.scrollIntoView({behavior:'smooth',block:'end'})}}
+  function renderPending(){ let old=$('typing'); if(old) old.remove(); updateGenerationAction(); if(state.pending){const row=document.createElement('div');row.id='typing';row.className='message ai';row.innerHTML='<div class="avatar">✦</div><div class="message-body"><div class="message-meta">Rlaude</div><div class="typing"><i></i><i></i><i></i>&nbsp; working</div><div class="tool-card"><div class="tool-head">Working <span class="chev">⌄</span></div><div class="tool-items"><div class="tool-item">Reading project context</div><div class="tool-item">Waiting for OpenCode</div></div></div></div>';$('chat-list').append(row);row.scrollIntoView({behavior:'smooth',block:'end'})}else{$('chat-input')?.focus()}}
   function stopGeneration(){const r=bridge('stopGeneration');state.pending=false;renderPending();toast(r.ok?'Generation stopped.':r.error?.message||'Unable to stop')}
   function applyBootstrap(data) {
     const screen=$('bootstrap-screen'), steps=$('bootstrap-steps'), names=data.steps||['Preparing storage','Downloading runtime','Extracting','Installing opencode','Starting server','Ready'];
@@ -445,6 +470,7 @@
     const presets=['','big-pickle','deepseek-v4-flash-free','minimax-m3-free','nemotron-3-ultra-free','gpt-5.4-nano','mimo-v2.5-free'];
     $('model-preset').value=presets.includes(m)?m:'__custom__';
     onProviderChange();
+    const label=(d.model||'Default').replace(/^.*\//,''); if($('composer-model')) $('composer-model').textContent=label;
     $('model-state').textContent=(d.provider==='opencode'||!d.provider)?'Using OpenCode Zen — free, no API key required.':('Using '+d.provider+(d.model?'/'+d.model:' (default model)')+(d.hasApiKey?' · API key saved':' · no API key yet'));
   }
   function saveModelConfig(){
