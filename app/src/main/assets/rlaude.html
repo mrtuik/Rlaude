@@ -7,17 +7,23 @@
   <title>Rlaude — Code. Build. Ship.</title>
   <style>
     :root {
-      --bg: #0b0d10; --panel: #11151a; --panel-2: #171c22; --panel-3: #1d232b;
-      --line: #272e38; --text: #f2f4f7; --muted: #8993a1; --faint: #5d6775;
-      --accent: #000000; --accent-2: #000000; --green: #58d391; --yellow: #f1c76b;
-      --red: #f0748a; --blue: #6fb4ff; --shadow: 0 18px 50px rgba(0,0,0,.28);
+      --bg: #f6f5f2; --panel: #fffefa; --panel-2: #f0efeb; --panel-3: #e6e3dc;
+      --line: #e1dfd9; --text: #1b1b19; --muted: #77736c; --faint: #aaa69d;
+      --accent: #191918; --accent-2: #191918; --green: #3f9b6d; --yellow: #c49332;
+      --red: #c76565; --blue: #4d79d8; --shadow: 0 18px 50px rgba(52,47,38,.12);
       --radius: 14px; --font: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;
       --sans: Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
     }
     [data-theme="light"] {
-      --bg: #f7f8fa; --panel: #fff; --panel-2: #f0f2f5; --panel-3: #e7eaf0;
-      --line: #dce1e8; --text: #1d232c; --muted: #687383; --faint: #9aa4b1;
-      --shadow: 0 18px 50px rgba(36,47,66,.12);
+      --bg: #f6f5f2; --panel: #fffefa; --panel-2: #f0efeb; --panel-3: #e6e3dc;
+      --line: #e1dfd9; --text: #1b1b19; --muted: #77736c; --faint: #aaa69d;
+      --shadow: 0 18px 50px rgba(52,47,38,.12);
+    }
+    [data-theme="dark"] {
+      --bg: #0b0d10; --panel: #11151a; --panel-2: #171c22; --panel-3: #1d232b;
+      --line: #272e38; --text: #f2f4f7; --muted: #8993a1; --faint: #5d6775;
+      --accent: #ffffff; --accent-2: #ffffff; --green: #58d391; --yellow: #f1c76b;
+      --red: #f0748a; --blue: #6fb4ff; --shadow: 0 18px 50px rgba(0,0,0,.28);
     }
     * { box-sizing:border-box; -webkit-tap-highlight-color:transparent }
     html,body { height:100%; margin:0; background:var(--bg); color:var(--text); font-family:var(--sans); overflow:hidden }
@@ -303,6 +309,624 @@
       .sidebar-backdrop { display:block; position:fixed; inset:0; background:rgba(10,12,16,.5); backdrop-filter:blur(1px); z-index:9; opacity:0; pointer-events:none; transition:opacity .22s ease }
       .sidebar-backdrop.open { opacity:1; pointer-events:auto }
     }
+
+    /* =====================================================================
+       PREMIUM RLAUDE TOPOLOGY
+       Warm editorial surfaces, quieter chrome, and touch-first controls.
+       ===================================================================== */
+    body {
+      background:
+        radial-gradient(circle at 15% -10%, rgba(255,255,255,.94), transparent 34%),
+        var(--bg);
+    }
+    .app { background:var(--bg) }
+    .sidebar {
+      width:296px;
+      padding:20px 14px 16px;
+      background:rgba(255,254,250,.88);
+      border-right:1px solid rgba(225,223,217,.92);
+      box-shadow:10px 0 34px rgba(56,49,38,.035);
+      backdrop-filter:blur(18px);
+    }
+    [data-theme="dark"] .sidebar {
+      background:rgba(17,21,26,.92);
+      border-right-color:var(--line);
+      box-shadow:none;
+    }
+    .brand {
+      padding:3px 10px 28px;
+      gap:11px;
+      font-size:20px;
+      letter-spacing:-.045em;
+    }
+    .brand-mark {
+      width:31px;
+      height:31px;
+      border-radius:10px;
+      box-shadow:0 5px 14px rgba(25,25,24,.16);
+    }
+    .brand-mark svg { width:24px; height:24px }
+    .new-chat {
+      width:48px;
+      height:44px;
+      margin:0 20px 15px auto;
+      border-radius:999px;
+      background:var(--accent);
+      color:#fff;
+      display:grid;
+      place-items:center;
+      padding:0;
+      box-shadow:none;
+    }
+    [data-theme="dark"] .new-chat { color:#111; background:#fff }
+    .new-chat svg {
+      width:18px;
+      height:18px;
+      stroke:currentColor;
+      fill:none;
+      stroke-width:1.8;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+    .nav-label {
+      padding:0 11px 9px;
+      color:#a6a198;
+      letter-spacing:.16em;
+    }
+    .nav { gap:4px }
+    .nav button,.bottom-link {
+      padding:10px 12px;
+      border-radius:11px;
+      color:#817d75;
+    }
+    .nav button:hover,.nav button.active,.bottom-link:hover {
+      color:var(--text);
+      background:var(--panel-2);
+    }
+    .chat-history {
+      margin-top:5px;
+      padding-right:4px;
+      scrollbar-width:thin;
+    }
+    .chat-item {
+      padding:10px 8px 10px 12px;
+      border-radius:11px;
+    }
+    .sidebar-bottom {
+      gap:6px;
+      padding-top:12px;
+    }
+    .runtime-pill {
+      margin:0 4px 3px;
+      padding:10px 11px;
+      border-radius:12px;
+      background:rgba(240,239,235,.82);
+      border-color:rgba(225,223,217,.9);
+    }
+    [data-theme="dark"] .runtime-pill { background:var(--panel-2); border-color:var(--line) }
+    .sidebar-icons { margin-top:1px; gap:6px }
+    .sidebar-icons button { height:38px; border-radius:10px }
+    .main { background:transparent }
+    .topbar {
+      height:72px;
+      padding:0 30px;
+      background:rgba(246,245,242,.76);
+      border-bottom-color:rgba(225,223,217,.88);
+      backdrop-filter:blur(18px);
+    }
+    [data-theme="dark"] .topbar { background:rgba(11,13,16,.76); border-bottom-color:var(--line) }
+    .crumb { color:#8a857c; font-size:12px }
+    .crumb strong { font-weight:650; color:var(--text) }
+    .status { border-radius:999px; padding:7px 11px; background:rgba(255,254,250,.66) }
+    [data-theme="dark"] .status { background:transparent }
+    .icon-button { border-radius:999px }
+    .wrap { padding-top:40px }
+    .home-wrap { padding-top:clamp(64px,14vh,138px) }
+    .eyebrow { color:#9a958c; letter-spacing:.16em; margin-bottom:20px }
+    h1 {
+      font-weight:720;
+      color:var(--text);
+      letter-spacing:-.065em;
+    }
+    .subtitle { max-width:580px; color:#77736c; line-height:1.7 }
+    .composer {
+      border-radius:22px;
+      padding:13px 14px 12px;
+      background:rgba(255,254,250,.96);
+      border-color:#dedbd4;
+      box-shadow:0 14px 40px rgba(55,48,39,.09), 0 2px 5px rgba(55,48,39,.04);
+    }
+    [data-theme="dark"] .composer { background:var(--panel); border-color:var(--line); box-shadow:var(--shadow) }
+    .composer:focus-within {
+      border-color:#8b867d;
+      box-shadow:0 0 0 3px rgba(25,25,24,.06), 0 14px 40px rgba(55,48,39,.09);
+    }
+    .model-tag {
+      border-radius:999px;
+      padding:6px 10px;
+      background:var(--panel-2);
+      border-color:transparent;
+    }
+    .composer textarea { min-height:58px; padding:8px 3px 12px; font-size:14px }
+    .composer-row { padding-top:10px; border-top-color:rgba(225,223,217,.8) }
+    .mini { border-radius:999px; width:34px; height:34px }
+    .tool-label { padding:0 10px; border:1px solid var(--line) }
+    .send {
+      width:40px;
+      height:40px;
+      box-shadow:0 5px 12px rgba(25,25,24,.16);
+    }
+    .quick { margin-top:20px; gap:9px }
+    .chip { padding:9px 13px; border-radius:999px; background:rgba(255,254,250,.6) }
+    .project-card,.list-row,.editor-shell,.stat-card,.setting,.thought-card {
+      border-radius:14px;
+      box-shadow:0 3px 12px rgba(55,48,39,.035);
+    }
+    .project-card:hover,.list-row:hover { transform:translateY(-1px); transition:transform .15s, border-color .15s, background .15s }
+
+    /* Reference explorer topology: floating search + segmented tabs + inset list. */
+    .explorer-wrap {
+      max-width:760px;
+      padding-top:34px;
+    }
+    .explorer-heading {
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:20px;
+    }
+    .explorer-heading .eyebrow {
+      margin-bottom:10px;
+      font-size:10px;
+    }
+    .explorer-heading h2 {
+      font-size:30px;
+      letter-spacing:-.055em;
+      margin:0 0 5px;
+    }
+    .explorer-heading p {
+      color:var(--muted);
+      font-size:12px;
+      margin:0;
+    }
+    .explorer-action {
+      flex:none;
+      white-space:nowrap;
+      border-radius:999px;
+      padding:10px 14px;
+    }
+    .explorer-search-row {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin-bottom:10px;
+    }
+    .explorer-search {
+      display:flex;
+      align-items:center;
+      gap:9px;
+      flex:1;
+      min-width:0;
+      height:44px;
+      padding:0 14px;
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:999px;
+      box-shadow:0 3px 9px rgba(55,48,39,.035);
+    }
+    .explorer-search:focus-within {
+      border-color:#aaa49a;
+      box-shadow:0 0 0 3px rgba(25,25,24,.05);
+    }
+    .explorer-search svg {
+      width:16px;
+      height:16px;
+      flex:none;
+      stroke:#938e85;
+      fill:none;
+      stroke-width:1.7;
+    }
+    .explorer-search input {
+      width:100%;
+      min-width:0;
+      border:0;
+      outline:0;
+      background:transparent;
+      color:var(--text);
+      font-size:13px;
+    }
+    .explorer-search input::placeholder { color:#9b968d }
+    .explorer-file-action { height:42px; border-radius:999px; padding:0 14px; white-space:nowrap }
+    .explorer-segment {
+      display:flex;
+      gap:3px;
+      padding:3px;
+      margin-bottom:10px;
+      background:var(--panel-2);
+      border-radius:12px;
+    }
+    .explorer-segment button {
+      flex:1;
+      min-width:0;
+      padding:8px 10px;
+      border-radius:9px;
+      background:transparent;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:650;
+    }
+    .explorer-segment button.active {
+      color:var(--text);
+      background:var(--panel);
+      box-shadow:0 2px 5px rgba(55,48,39,.08);
+    }
+    .explorer-chips {
+      display:flex;
+      gap:7px;
+      overflow-x:auto;
+      scrollbar-width:none;
+      margin-bottom:13px;
+    }
+    .explorer-chips::-webkit-scrollbar { display:none }
+    .explorer-chips button {
+      flex:none;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:var(--panel);
+      color:var(--muted);
+      padding:6px 11px;
+      font-size:11px;
+    }
+    .explorer-chips button.active {
+      color:#fff;
+      background:var(--accent);
+      border-color:var(--accent);
+    }
+    .explorer-inset {
+      overflow:hidden;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:var(--panel);
+      box-shadow:0 4px 16px rgba(55,48,39,.045);
+    }
+    .projects-explorer .project-grid {
+      display:grid;
+      grid-template-columns:1fr;
+      gap:0;
+    }
+    .projects-explorer .project-grid > .empty {
+      grid-column:1;
+      border:0;
+      border-radius:0;
+      padding:30px 16px;
+      background:transparent;
+    }
+    .projects-explorer .project-card {
+      display:grid;
+      grid-template-columns:40px minmax(0,1fr);
+      grid-template-rows:auto auto;
+      column-gap:12px;
+      align-items:center;
+      border:0;
+      border-bottom:1px solid var(--line);
+      border-radius:0;
+      padding:13px 15px;
+      background:transparent;
+      box-shadow:none;
+      min-height:68px;
+    }
+    .projects-explorer .project-card:last-child { border-bottom:0 }
+    .projects-explorer .project-card .folder {
+      grid-column:1;
+      grid-row:1 / span 2;
+      width:40px;
+      height:40px;
+      margin:0;
+      display:grid;
+      place-items:center;
+      border-radius:50%;
+      background:var(--panel-2);
+      color:var(--text);
+    }
+    .projects-explorer .project-card .folder svg { width:18px; height:18px }
+    .projects-explorer .project-card strong {
+      grid-column:2;
+      grid-row:1;
+      font-size:13px;
+      letter-spacing:-.01em;
+    }
+    .projects-explorer .project-card small {
+      grid-column:2;
+      grid-row:2;
+      margin-top:2px;
+      color:var(--muted);
+      font-size:11px;
+    }
+    .files-explorer .explorer-inset {
+      min-height:68px;
+    }
+    .files-explorer .explorer-inset .list-row {
+      border:0;
+      border-bottom:1px solid var(--line);
+      border-radius:0;
+      padding:13px 15px;
+      min-height:68px;
+      background:transparent;
+      box-shadow:none;
+    }
+    .files-explorer .explorer-inset .list-row:last-child { border-bottom:0 }
+    .files-explorer .explorer-inset .list-row > svg {
+      width:38px;
+      height:38px;
+      padding:9px;
+      border-radius:50%;
+      background:var(--panel-2);
+      color:var(--text);
+    }
+    .files-explorer .explorer-inset .list-row main strong {
+      font-size:13px;
+      font-weight:650;
+    }
+    .files-explorer .explorer-inset .list-row main small { font-size:11px }
+    .files-explorer .explorer-inset .empty {
+      border:0;
+      border-radius:0;
+      padding:28px 16px;
+      background:transparent;
+    }
+    .composer-tools {
+      gap:7px;
+      flex-wrap:nowrap;
+      min-width:0;
+    }
+    .composer-tools .mini {
+      flex:0 0 34px;
+    }
+    .composer-tools .tool-label {
+      flex:0 0 auto;
+      min-width:68px;
+      width:auto;
+      white-space:nowrap;
+    }
+
+    /* Add to chat: faithful to the supplied bottom-sheet reference. */
+    .sheet-backdrop {
+      background:rgba(37,34,29,.44);
+      backdrop-filter:blur(8px) saturate(.86);
+    }
+    .sheet-card {
+      width:min(540px,100%);
+      background:#fffefa;
+      border-color:#e2dfd8;
+      border-radius:28px 28px 0 0;
+      padding:12px 20px calc(24px + env(safe-area-inset-bottom, 0px));
+      box-shadow:0 -14px 46px rgba(37,34,29,.18);
+    }
+    [data-theme="dark"] .sheet-card { background:var(--panel); border-color:var(--line) }
+    .sheet-card .bootstrap-handle { width:42px; height:4px; background:#d5d1c8; margin-bottom:15px }
+    .add-sheet-head {
+      display:grid;
+      grid-template-columns:38px 1fr 38px;
+      align-items:center;
+      margin-bottom:18px;
+    }
+    .add-sheet-head h3 { text-align:center; font-size:17px; letter-spacing:-.025em }
+    .sheet-close {
+      width:36px;
+      height:36px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      color:var(--text);
+      background:transparent;
+    }
+    .sheet-close:hover { background:var(--panel-2) }
+    .sheet-close svg { width:19px; height:19px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round }
+    .action-tile-row {
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin:0 0 18px;
+    }
+    .action-tile-btn {
+      min-height:116px;
+      padding:15px 8px 13px;
+      border:1px solid #e6e3dc;
+      border-radius:19px;
+      background:#fffefa;
+      transition:transform .15s, background .15s, border-color .15s;
+    }
+    [data-theme="dark"] .action-tile-btn { background:var(--panel); border-color:var(--line) }
+    .action-tile-btn:hover { background:var(--panel-2); border-color:#c9c5bc }
+    .action-tile-btn:active { transform:scale(.97) }
+    .action-tile-circle {
+      width:50px;
+      height:50px;
+      background:#f0efeb;
+      border:0;
+      color:var(--text);
+    }
+    [data-theme="dark"] .action-tile-circle { background:var(--panel-2) }
+    .action-tile-circle svg { width:22px; height:22px }
+    .action-tile-btn span { font-size:13px; font-weight:650; margin-top:9px }
+    #add-to-chat-sheet .list { gap:0; border:1px solid #e6e3dc; border-radius:18px; overflow:hidden; background:#fffefa }
+    [data-theme="dark"] #add-to-chat-sheet .list { border-color:var(--line); background:var(--panel) }
+    #add-to-chat-sheet .list-row {
+      border:0;
+      border-radius:0;
+      border-bottom:1px solid #ebe8e2;
+      padding:13px 14px;
+      box-shadow:none;
+      min-height:64px;
+    }
+    #add-to-chat-sheet .list-row:last-child { border-bottom:0 }
+    [data-theme="dark"] #add-to-chat-sheet .list-row { border-bottom-color:var(--line) }
+    #add-to-chat-sheet .list-row > svg {
+      width:36px;
+      height:36px;
+      padding:9px;
+      border-radius:50%;
+      background:#f0efeb;
+      color:var(--text);
+    }
+    [data-theme="dark"] #add-to-chat-sheet .list-row > svg { background:var(--panel-2) }
+    #add-to-chat-sheet .list-row main { padding-left:1px }
+    #add-to-chat-sheet .list-row main strong { font-size:13px }
+    #add-to-chat-sheet .list-row main small { font-size:11px; color:#89847b }
+    #add-to-chat-sheet .arrow { font-size:21px; color:#a6a198 }
+    #add-to-chat-sheet .toggle {
+      width:48px;
+      height:28px;
+      padding:3px;
+      border-radius:999px;
+      background:#dedbd4;
+    }
+    #add-to-chat-sheet .toggle span { width:22px; height:22px; background:#fff; box-shadow:0 2px 4px rgba(0,0,0,.14) }
+    #add-to-chat-sheet .toggle.on { background:#2877e8 }
+    #add-to-chat-sheet .toggle.on span { transform:translateX(20px) }
+    #add-to-chat-sheet .sheet-card { max-height:92vh }
+    #add-to-chat-sheet .media-tile-grid {
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin:0 0 16px;
+    }
+    #add-to-chat-sheet .media-tile-btn {
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      min-height:116px;
+      padding:16px 8px 14px;
+      border:1px solid #e6e3dc;
+      border-radius:18px;
+      background:#fffefa;
+      color:var(--text);
+      text-align:center;
+      transition:transform .12s, background .12s;
+    }
+    [data-theme="dark"] #add-to-chat-sheet .media-tile-btn {
+      background:var(--panel);
+      border-color:var(--line);
+    }
+    #add-to-chat-sheet .media-tile-btn:active {
+      transform:scale(.97);
+      background:var(--panel-2);
+    }
+    #add-to-chat-sheet .tile-icon-well {
+      width:48px;
+      height:48px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      flex:none;
+      background:#f0efeb;
+      color:var(--text);
+    }
+    [data-theme="dark"] #add-to-chat-sheet .tile-icon-well { background:var(--panel-2) }
+    #add-to-chat-sheet .tile-icon-well svg {
+      width:22px;
+      height:22px;
+      fill:none;
+      stroke:currentColor;
+      stroke-width:1.8;
+    }
+    #add-to-chat-sheet .tile-label {
+      margin-top:8px;
+      color:var(--text);
+      font-size:13px;
+      font-weight:650;
+      letter-spacing:-.01em;
+    }
+    #add-to-chat-sheet .reference-add-list {
+      overflow:hidden;
+      border:1px solid #e6e3dc;
+      border-radius:18px;
+      background:#fffefa;
+    }
+    [data-theme="dark"] #add-to-chat-sheet .reference-add-list {
+      border-color:var(--line);
+      background:var(--panel);
+    }
+    #add-to-chat-sheet .grouped-row {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      width:100%;
+      min-height:67px;
+      padding:12px 14px;
+      border:0;
+      border-bottom:1px solid #ebe8e2;
+      background:transparent;
+      color:var(--text);
+      text-align:left;
+    }
+    #add-to-chat-sheet .grouped-row:last-child { border-bottom:0 }
+    [data-theme="dark"] #add-to-chat-sheet .grouped-row { border-bottom-color:var(--line) }
+    #add-to-chat-sheet .row-lead {
+      display:flex;
+      align-items:center;
+      min-width:0;
+      gap:12px;
+    }
+    #add-to-chat-sheet .row-icon-well {
+      width:38px;
+      height:38px;
+      flex:none;
+      display:grid;
+      place-items:center;
+      border-radius:50%;
+      background:#f0efeb;
+      color:var(--text);
+    }
+    [data-theme="dark"] #add-to-chat-sheet .row-icon-well { background:var(--panel-2) }
+    #add-to-chat-sheet .row-icon-well svg {
+      width:18px;
+      height:18px;
+      fill:none;
+      stroke:currentColor;
+      stroke-width:1.7;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+    #add-to-chat-sheet .row-text { min-width:0 }
+    #add-to-chat-sheet .row-text strong {
+      display:block;
+      font-size:13px;
+      font-weight:600;
+      line-height:1.25;
+    }
+    #add-to-chat-sheet .row-text small {
+      display:block;
+      max-width:245px;
+      margin-top:3px;
+      overflow:hidden;
+      color:#89847b;
+      font-size:11px;
+      line-height:1.25;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+    #add-to-chat-sheet .row-chevron {
+      flex:none;
+      margin-left:8px;
+      color:#a6a198;
+      font-size:21px;
+      font-weight:400;
+      line-height:1;
+    }
+
+    @media (max-width:720px) {
+      .sidebar { width:min(312px,88vw); background:#fffefa }
+      .topbar { height:64px; padding:0 15px }
+      .top-actions .status { display:none }
+      .wrap { padding:25px 16px 55px }
+      .home-wrap { padding-top:48px }
+      h1 { font-size:clamp(32px,10vw,44px) }
+      .composer { border-radius:20px }
+      .sheet-card { padding-left:16px; padding-right:16px }
+    }
   </style>
 </head>
 <body>
@@ -310,7 +934,6 @@
   <div class="sidebar-backdrop" id="sidebar-backdrop" onclick="toggleMenu()"></div>
   <aside class="sidebar" id="sidebar">
     <div class="brand"><span class="brand-mark"><svg viewBox="0 0 24 24" aria-label="Rlaude logo"><path d="M4 4h16v16h-6.3l-4.85-4.85V20H4z" fill="currentColor"/><path d="M8.85 8.85h6.3v6.3h-6.3z" fill="#000"/></svg></span>Rlaude</div>
-    <button class="new-chat" id="side-new-chat" onclick="newChat()">+ New chat</button>
     <div class="nav-label">Workspace</div>
     <nav class="nav" id="sidebar-nav">
       <button data-screen="home" onclick="go('home')"><svg viewBox="0 0 24 24"><path d="m4 11 8-7 8 7v8a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M9 20v-6h6v6"/></svg>Home</button>
@@ -322,6 +945,9 @@
     <div class="nav-label" style="margin-top:18px">Chats</div>
     <div class="chat-history" id="chat-history"><div class="chat-empty">No chats yet</div></div>
     <div class="sidebar-bottom">
+      <button class="new-chat" id="side-new-chat" onclick="newChat()" title="New chat" aria-label="New chat">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L8 18l-4 1 1-4Z"/></svg>
+      </button>
       <div class="runtime-pill" onclick="openSetupSheet()" title="Runtime setup"><span class="dot" id="side-dot"></span><span id="side-runtime">Checking runtime…</span></div>
       <div class="sidebar-icons">
         <button data-screen="settings" onclick="go('settings')" title="Settings"><svg viewBox="0 0 24 24"><path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z"/><path d="m19.4 15 .1.1a2 2 0 0 1-2.8 2.8l-.1-.1a2 2 0 0 0-3.4 1.4v.2a2 2 0 0 1-4 0v-.2A2 2 0 0 0 5.8 18l-.1.1a2 2 0 0 1-2.8-2.8l.1-.1A2 2 0 0 0 1.6 12a2 2 0 0 1 0-4H2A2 2 0 0 0 3 4.6l-.1-.1a2 2 0 0 1 2.8-2.8l.1.1A2 2 0 0 0 9.2.4v-.2a2 2 0 0 1 4 0v.2A2 2 0 0 0 16.6 2l.1-.1a2 2 0 0 1 2.8 2.8l-.1.1A2 2 0 0 0 20.8 8h.2a2 2 0 0 1 0 4h-.2a2 2 0 0 0-1.4 3Z"/></svg></button>
@@ -374,7 +1000,6 @@
         <div class="composer-row">
           <div class="composer-tools">
             <button class="mini" onclick="openAddToChatSheet()" title="Add to chat" aria-label="Add to chat"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></button>
-            <button class="mini tool-label" onclick="openToolsSheet()" title="Tools and skills"><svg viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/><circle cx="9" cy="8" r="2"/><circle cx="15" cy="16" r="2"/></svg><span>Tools</span></button>
             <button class="mini" onclick="toggleSlashDropdown(event, 'home')" title="Insert connector or source" style="font-family:var(--font);font-weight:700">/</button>
             <button class="mini" onclick="toast('Voice input will be enabled in a future release.')" title="Voice input" aria-label="Voice input"><svg viewBox="0 0 24 24"><path d="M4 10v4M8 6v12M12 3v18M16 7v10M20 10v4" stroke-linecap="round"/></svg></button>
           </div>
@@ -409,7 +1034,6 @@
           <div class="composer-row">
             <div class="composer-tools">
               <button class="mini" onclick="openAddToChatSheet()" title="Add to chat" aria-label="Add to chat"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></button>
-              <button class="mini tool-label" onclick="openToolsSheet()" title="Tools and skills"><svg viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/><circle cx="9" cy="8" r="2"/><circle cx="15" cy="16" r="2"/></svg><span>Tools</span></button>
               <button class="mini" onclick="toggleSlashDropdown(event, 'chat')" title="Insert connector or source" style="font-family:var(--font);font-weight:700">/</button>
               <button class="mini" onclick="toast('Voice input will be enabled in a future release.')" title="Voice input" aria-label="Voice input"><svg viewBox="0 0 24 24"><path d="M4 10v4M8 6v12M12 3v18M16 7v10M20 10v4" stroke-linecap="round"/></svg></button>
             </div>
@@ -440,8 +1064,57 @@
       </div>
     </section>
 
-    <section class="screen" id="screen-projects"><div class="wrap"><div class="section-head"><div><h2>Projects</h2><p>Local workspaces stored inside Rlaude</p></div><button class="primary" onclick="openModal()">+ New project</button></div><div class="toolbar"><input class="search" id="project-search" placeholder="Search projects…" oninput="renderProjects()"></div><div id="project-list" class="project-grid"></div></div></section>
-    <section class="screen" id="screen-files"><div class="wrap"><div class="section-head"><div><h2>Files</h2><p id="files-subtitle">Select a project to browse its files</p></div><button class="ghost" onclick="go('projects')">Change project</button></div><div class="toolbar"><input class="search" id="file-search" placeholder="Filter files…" oninput="renderFiles()"><button class="primary" onclick="createFile(false)">+ File</button></div><div id="file-list" class="list"></div></div></section>
+    <section class="screen" id="screen-projects">
+      <div class="wrap explorer-wrap projects-explorer">
+        <div class="explorer-heading">
+          <div>
+            <div class="eyebrow">Workspace library</div>
+            <h2>Projects</h2>
+            <p>Local workspaces stored inside Rlaude</p>
+          </div>
+          <button class="primary explorer-action" onclick="openModal()">+ New project</button>
+        </div>
+        <div class="explorer-search">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg>
+          <input id="project-search" placeholder="Search projects…" oninput="renderProjects()">
+        </div>
+        <div class="explorer-segment">
+          <button class="active">All Projects</button>
+          <button>Recent files</button>
+        </div>
+        <div class="explorer-chips">
+          <button class="active">All</button>
+          <button>Recently edited</button>
+          <button>Starred</button>
+          <button>Git dirty</button>
+        </div>
+        <div id="project-list" class="project-grid explorer-inset"></div>
+      </div>
+    </section>
+    <section class="screen" id="screen-files">
+      <div class="wrap explorer-wrap files-explorer">
+        <div class="explorer-heading">
+          <div>
+            <div class="eyebrow">Workspace explorer</div>
+            <h2>Files</h2>
+            <p id="files-subtitle">Select a project to browse its files</p>
+          </div>
+          <button class="ghost explorer-action" onclick="go('projects')">Change project</button>
+        </div>
+        <div class="explorer-search-row">
+          <div class="explorer-search">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg>
+            <input id="file-search" placeholder="Filter files…" oninput="renderFiles()">
+          </div>
+          <button class="primary explorer-file-action" onclick="createFile(false)">+ File</button>
+        </div>
+        <div class="explorer-segment">
+          <button class="active">Current files</button>
+          <button>Recent projects</button>
+        </div>
+        <div id="file-list" class="list explorer-inset"></div>
+      </div>
+    </section>
     <section class="screen" id="screen-editor"><div class="wrap"><div class="section-head"><div><h2>Editor</h2><p id="editor-subtitle">Open a file from the explorer</p></div><button class="primary" onclick="saveEditor()">Save</button></div><div class="editor-shell"><div class="editor-head"><span id="editor-path">No file selected</span><div class="editor-actions"><button class="ghost" onclick="toast('Select code in the editor, then ask Rlaude from chat.')">Ask Rlaude</button></div></div><div class="code-area"><div class="lines" id="line-numbers">1</div><textarea id="editor" spellcheck="false" oninput="updateLines()" onscroll="syncLines()"></textarea></div></div><div id="diff-note" style="margin-top:12px"></div></div></section>
     <section class="screen" id="screen-terminal"><div class="wrap"><div class="section-head"><div><h2>Terminal</h2><p>Restricted developer commands for the current project</p></div><button class="ghost" onclick="document.getElementById('terminal-output').textContent=''">Clear</button></div><div class="notice"><span>●</span><span>Rlaude never exposes arbitrary shell execution to the WebView. Commands are validated by the native bridge before they run.</span></div><div class="editor-shell"><div class="editor-head"><span id="terminal-project">No project selected</span><span>native process</span></div><div style="padding:12px;border-bottom:1px solid var(--line);display:flex;gap:8px"><input class="search" id="terminal-input" value="git status" onkeydown="if(event.key==='Enter')runTerminal()"><button class="primary" onclick="runTerminal()">Run</button></div><pre id="terminal-output" style="margin:0;padding:15px;min-height:250px;white-space:pre-wrap;color:var(--muted);font:12px/1.6 var(--font)">Output will appear here.</pre></div></div></section>
     <section class="screen" id="screen-git"><div class="wrap"><div class="section-head"><div><h2>Git</h2><p id="git-subtitle">Select a project to see its working tree</p></div><button class="ghost" onclick="refreshGit()">Refresh</button></div><div class="stat-cards"><div class="stat-card"><small>Branch</small><strong id="git-branch">—</strong></div><div class="stat-card"><small>Changed files</small><strong id="git-count">—</strong></div><div class="stat-card"><small>Remote</small><strong id="git-remote">—</strong></div></div><div id="git-files" class="list"></div><div class="setting" style="margin-top:18px"><div><strong>Commit changes</strong><p>Stage all local changes with a message.</p></div><button class="primary" onclick="commitGit()">Commit</button></div></div></section>
@@ -475,90 +1148,100 @@
   </div>
 </div>
 
-<!-- Tools Bottom Sheet -->
-<div class="sheet-backdrop" id="tools-sheet" onclick="if(event.target===this)closeToolsSheet()">
-  <div class="sheet-card">
-    <div class="bootstrap-handle"></div>
-    <div class="sheet-head">
-      <h3>Tools &amp; Capabilities</h3>
-      <button class="ghost" style="padding:4px 8px" onclick="closeToolsSheet()">Close</button>
-    </div>
-    <div class="list" style="margin-top:12px">
-      <div class="list-row" onclick="openToolView('websearch')">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m21 21-4.35-4.35M3.6 9h16.8M3.6 15h16.8"/></svg>
-        <main><strong>Web Search</strong><small>Live search context, documentation, and web references</small></main>
-        <span class="arrow">›</span>
-      </div>
-      <div class="list-row" onclick="openToolView('connectors')">
-        <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-        <main><strong>Connectors</strong><small>Upload and connect text, images, or JSON data sources</small></main>
-        <span class="arrow">›</span>
-      </div>
-      <div class="list-row" onclick="openToolView('skills')">
-        <svg viewBox="0 0 24 24"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        <main><strong>Skills</strong><small>Custom developer skills and execution prompts</small></main>
-        <span class="arrow">›</span>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- Add to Chat Bottom Sheet -->
 <div class="sheet-backdrop" id="add-to-chat-sheet" onclick="if(event.target===this)closeAddToChatSheet()">
   <div class="sheet-card" onclick="event.stopPropagation()">
     <div class="bootstrap-handle"></div>
-    <div class="sheet-head">
+    <div class="sheet-head add-sheet-head">
+      <button class="sheet-close" onclick="closeAddToChatSheet()" aria-label="Close add to chat">
+        <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
       <h3>Add to chat</h3>
-      <button class="ghost" style="padding:4px 8px" onclick="closeAddToChatSheet()">Close</button>
+      <div></div>
     </div>
 
     <!-- Hidden native file & camera pickers -->
     <input type="file" id="camera-input" accept="image/*" capture="environment" style="display:none" onchange="handleImageInput(this)">
     <input type="file" id="photos-input" accept="image/*" multiple style="display:none" onchange="handleImageInput(this)">
 
-    <!-- 3-Tile Row: Camera / Photos / Files -->
-    <div class="action-tile-row">
-      <button class="action-tile-btn" onclick="$('camera-input').click()">
-        <div class="action-tile-circle"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
-        <span>Camera</span>
+    <!-- Exact reference topology: 3-up media tiles + grouped inset list. -->
+    <div class="media-tile-grid">
+      <button class="media-tile-btn" onclick="$('camera-input').click()">
+        <div class="tile-icon-well">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="18" height="12" x="3" y="4" rx="2" ry="2"/><line x1="2" x2="22" y1="20" y2="20"/>
+          </svg>
+        </div>
+        <span class="tile-label">Camera</span>
       </button>
-      <button class="action-tile-btn" onclick="$('photos-input').click()">
-        <div class="action-tile-circle"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div>
-        <span>Photos</span>
+      <button class="media-tile-btn" onclick="$('photos-input').click()">
+        <div class="tile-icon-well">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12.034 12.681a.498.498 0 0 1 .647-.647l9 3.5a.5.5 0 0 1-.033.943l-3.444 1.068a1 1 0 0 0-.66.66l-1.067 3.443a.5.5 0 0 1-.943.033z"/>
+            <path d="M21 11V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h6"/>
+          </svg>
+        </div>
+        <span class="tile-label">Photos</span>
       </button>
-      <button class="action-tile-btn" onclick="closeAddToChatSheet();attachFile()">
-        <div class="action-tile-circle"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
-        <span>Files</span>
+      <button class="media-tile-btn" onclick="closeAddToChatSheet();attachFile()">
+        <div class="tile-icon-well">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 2h10"/><path d="M5 6h14"/><rect width="18" height="12" x="3" y="10" rx="2"/>
+          </svg>
+        </div>
+        <span class="tile-label">Files</span>
       </button>
     </div>
 
-    <div class="list" style="margin-top:16px">
-      <!-- Add to project row -->
-      <div class="list-row" onclick="closeAddToChatSheet();go('projects')">
-        <svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-        <main><strong>Add to project</strong><small id="add-to-project-label">Current: None</small></main>
-        <span class="arrow">›</span>
+    <div class="inset-grouped-card reference-add-list">
+      <div class="grouped-row" onclick="closeAddToChatSheet();go('projects')">
+        <div class="row-lead">
+          <div class="row-icon-well">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 10h16v10H4zM2 6h20v4H2zM10 14h4"/></svg>
+          </div>
+          <div class="row-text"><strong>Add to project</strong><small id="add-to-project-label">Current: None</small></div>
+        </div>
+        <span class="row-chevron">&rsaquo;</span>
       </div>
 
-      <!-- Web search toggle row -->
-      <div class="list-row" style="cursor:default" onclick="toggleWebSearch()">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m21 21-4.35-4.35M3.6 9h16.8M3.6 15h16.8"/></svg>
-        <main><strong>Web search</strong><small>Include live search and web references in answers</small></main>
+      <div class="grouped-row" style="cursor:default" onclick="toggleWebSearch()">
+        <div class="row-lead">
+          <div class="row-icon-well">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3.6 9h16.8M3.6 15h16.8M11.5 3a17 17 0 0 0 0 18M12.5 3a17 17 0 0 1 0 18"/></svg>
+          </div>
+          <div class="row-text"><strong>Web search</strong><small>Include live search and web references in answers</small></div>
+        </div>
         <div class="toggle" id="websearch-toggle"><span></span></div>
       </div>
 
-      <!-- Connectors row -->
-      <div class="list-row" onclick="closeAddToChatSheet();openToolView('connectors')">
-        <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-        <main><strong>Connectors</strong><small>Attach documents, schemas, or API contracts</small></main>
-        <span class="arrow">›</span>
+      <div class="grouped-row" onclick="closeAddToChatSheet();openToolView('connectors')">
+        <div class="row-lead">
+          <div class="row-icon-well">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m15.5 7.5-7 7a2.5 2.5 0 0 0 3.5 3.5l7-7a4.2 4.2 0 0 0-6-6l-7 7a6 6 0 0 0 8.5 8.5l4.5-4.5"/></svg>
+          </div>
+          <div class="row-text"><strong>Connectors</strong><small>Attach documents, schemas, or API contracts</small></div>
+        </div>
+        <span class="row-chevron">&rsaquo;</span>
       </div>
 
-      <!-- Memory row -->
-      <div class="list-row" onclick="toast('Memory feature coming soon')">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-        <main><strong>Memory</strong><small>Persistent contextual memory across chats</small></main>
-        <span class="arrow">›</span>
+      <div class="grouped-row" onclick="closeAddToChatSheet();openToolView('skills')">
+        <div class="row-lead">
+          <div class="row-icon-well">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <div class="row-text"><strong>Skills</strong><small>Custom developer skills and execution prompts</small></div>
+        </div>
+        <span class="row-chevron">&rsaquo;</span>
+      </div>
+
+      <div class="grouped-row" onclick="toast('Memory feature coming soon')">
+        <div class="row-lead">
+          <div class="row-icon-well">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          </div>
+          <div class="row-text"><strong>Memory</strong><small>Persistent contextual memory across chats</small></div>
+        </div>
+        <span class="row-chevron">&rsaquo;</span>
       </div>
     </div>
   </div>
@@ -1074,10 +1757,12 @@
 
   function openToolsSheet(){
     closeAllPopovers();
-    $('tools-sheet').classList.add('open');
+    const sheet = $('tools-sheet');
+    if(sheet) sheet.classList.add('open');
   }
   function closeToolsSheet(){
-    $('tools-sheet').classList.remove('open');
+    const sheet = $('tools-sheet');
+    if(sheet) sheet.classList.remove('open');
   }
 
   function openToolView(type){
@@ -1594,13 +2279,23 @@
   function formatBytes(n){ return n < 1024 ? n + ' B' : n < 1048576 ? (n / 1024).toFixed(1) + ' KB' : (n / 1048576).toFixed(1) + ' MB'; }
 
   document.addEventListener('click', e => {
+    const explorerTab = e.target.closest('.explorer-segment button');
+    if (explorerTab) {
+      explorerTab.parentElement.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+      explorerTab.classList.add('active');
+    }
+    const explorerChip = e.target.closest('.explorer-chips button');
+    if (explorerChip) {
+      explorerChip.parentElement.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+      explorerChip.classList.add('active');
+    }
     if(!e.target.closest('.model-tag') && !e.target.closest('.model-popover') && !e.target.closest('.slash-popover') && !e.target.closest('.top-actions') && !e.target.closest('.themed-select')){
       closeAllPopovers();
     }
   });
 
   document.addEventListener('DOMContentLoaded', () => {
-    setTheme('system');
+    setTheme('light');
     pollBootstrap();
     loadModelConfig();
     loadRuntime();
