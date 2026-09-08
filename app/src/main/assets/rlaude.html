@@ -181,9 +181,11 @@
     .empty { color:var(--muted); border:1px dashed var(--line); border-radius:12px; padding:22px; font-size:12px; text-align:center }
     
     /* Chat & Alignment */
-    .chat-wrap { max-width:820px; padding-bottom:180px }
+    .chat-wrap { max-width:820px; padding-bottom:210px }
     .chat-list { display:grid; gap:22px }
-    .message { display:flex; align-items:flex-start }
+    /* scroll-margin-bottom keeps the bottom of any scrolled-into-view message
+       clear of the fixed composer bar so the last reply is never hidden. */
+    .message { display:flex; align-items:flex-start; scroll-margin-bottom:220px }
     .message-body { min-width:0; flex:1; line-height:1.65; font-size:13px }
     .thinking-mark { width:28px; height:28px; color:var(--text); transform-origin:center; animation:rlaude-breathe 1.35s cubic-bezier(.4,0,.2,1) infinite }
     .thinking-mark svg { display:block; width:100%; height:100% }
