@@ -323,6 +323,10 @@ class WebBridge(
             json.optString("model", ""),
             json.optString("apiKey", "").ifBlank { null }
         )
+        android.util.Log.i(
+            "RlaudeModel",
+            "model switched to ${runtime.activeProviderId()}/${runtime.activeModelId()}"
+        )
         scope.launch { emit("runtime", openCode.restart()) }
         JSONObject().put("saved", true)
     }
