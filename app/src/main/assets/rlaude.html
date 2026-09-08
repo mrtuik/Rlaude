@@ -100,7 +100,7 @@
 
     /* Composer */
     .composer { position:relative; border:1px solid var(--line); background:var(--panel); border-radius:18px; padding:11px 12px 10px; box-shadow:var(--shadow); transition:border-color .16s,box-shadow .16s }
-    .composer:focus-within { border-color:var(--text); box-shadow:0 0 0 2px color-mix(in srgb,var(--text) 10%,transparent),var(--shadow) }
+    .composer textarea:focus { outline:none }
     .composer-head { min-height:28px; display:flex; align-items:flex-start; justify-content:space-between; gap:10px; margin-bottom:4px; position:relative }
     .model-tag { display:inline-flex; align-items:center; gap:6px; max-width:210px; padding:5px 9px; border:1px solid var(--line); border-radius:8px; background:var(--panel-2); color:var(--text); font:11px var(--font); white-space:nowrap; cursor:pointer }
     .model-tag span:first-child { color:var(--faint) }
@@ -438,10 +438,6 @@
       box-shadow:0 14px 40px rgba(55,48,39,.09), 0 2px 5px rgba(55,48,39,.04);
     }
     [data-theme="dark"] .composer { background:var(--panel); border-color:var(--line); box-shadow:var(--shadow) }
-    .composer:focus-within {
-      border-color:#8b867d;
-      box-shadow:0 0 0 3px rgba(25,25,24,.06), 0 14px 40px rgba(55,48,39,.09);
-    }
     .model-tag {
       border-radius:999px;
       padding:6px 10px;
