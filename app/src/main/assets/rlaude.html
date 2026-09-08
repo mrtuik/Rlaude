@@ -1522,6 +1522,14 @@
     renderPending();
 
     const realSessionId = state.sessionId === 'temp-untitled' ? null : state.sessionId;
+    // Read the saved model fresh on every send (no cached config object), so
+    // the log always reflects what the native layer will actually request.
+    const activeModel = bridge('getModelConfig');
+    if(activeModel.ok){
+      const d = activeModel.data || {};
+      console.log('[Rlaude] sending with model:', (d.provider || 'opencode') + '/' + ((d.model || '').replace(/^.*\//, '') || 'big-pickle'));
+    }
+
     const result = bridge('sendMessage', {
       projectId: state.project.id,
       text: backendText,
