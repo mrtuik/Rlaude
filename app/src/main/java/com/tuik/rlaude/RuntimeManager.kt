@@ -211,6 +211,25 @@ class RuntimeManager private constructor(context: Context, private val files: Fi
             .put("isDefault", prefs.getString(KEY_MODEL_PROVIDER, "").isNullOrBlank())
     }
 
+    /**
+     * Provider id currently selected. Always read straight from prefs at call
+     * time — never cache it in a field, or a model switch silently keeps
+     * routing messages to the previously selected provider.
+     */
+    fun activeProviderId(): String = effectiveProvider()
+
+    /**
+     * Bare model id currently selected (no "provider/" prefix), falling back
+     * to the default free model when nothing is set. Read fresh, same reason
+     * as activeProviderId().
+     */
+    fun activeModelId(): String {
+        val provider = effectiveProvider()
+        val raw = prefs.getString(KEY_MODEL_ID, "").orEmpty().trim()
+            .ifBlank { if (provider == DEFAULT_PROVIDER) DEFAULT_MODEL else "" }
+        return raw.removePrefix("$provider/")
+    }
+
     /** Mirrors what `opencode auth login` + a hand-edited opencode.json would do. */
     fun setModelConfig(provider: String, model: String, apiKey: String?) {
         // An empty provider means "reset to the default", not an error — OpenCode
