@@ -16,6 +16,10 @@ import java.net.URL
 class OpenCodeManager(private val runtime: RuntimeManager, private val files: FileManager) {
     private val baseUrl = "http://127.0.0.1:4096"
 
+    private companion object {
+        const val TAG = "RlaudeModel"
+    }
+
     suspend fun status(): JSONObject = withContext(Dispatchers.IO) {
         runtime.status().put("health", runtime.health())
     }
@@ -37,10 +41,26 @@ class OpenCodeManager(private val runtime: RuntimeManager, private val files: Fi
             // that was never created, which is what produced the generic
             // "UnknownError: Unexpected server error" on every single message.
             val session = sessionId ?: createSession(headers)
+            // Read the selected provider/model at send time and send it with
+            // every message. Writing opencode.json alone was not enough: the
+            // server only reads that file at startup, and an already-created
+            // session keeps whatever model its first message used — so
+            // switching from the @model dropdown changed the label but the
+            // next reply still came from the previous model.
+            val providerId = runtime.activeProviderId()
+            val modelId = runtime.activeModelId()
             val body = JSONObject()
                 .put("parts", org.json.JSONArray().put(JSONObject().put("type", "text").put("text", text)))
+            if (modelId.isNotBlank()) {
+                body.put("model", JSONObject().put("providerID", providerId).put("modelID", modelId))
+                // Older opencode builds read these as top-level fields.
+                body.put("providerID", providerId).put("modelID", modelId)
+            }
+            android.util.Log.i(TAG, "sendMessage session=$session model=$providerId/$modelId")
             val response = request("POST", "/session/$session/message", body, headers)
             response.put("sessionId", session)
+                .put("requestedProvider", providerId)
+                .put("requestedModel", modelId)
         }
 
     private fun createSession(headers: Map<String, String>): String {
